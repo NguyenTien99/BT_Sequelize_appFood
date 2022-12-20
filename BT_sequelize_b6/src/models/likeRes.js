@@ -5,14 +5,14 @@ module.exports = (sequelize) => {
   return sequelize.define(
     "LikeRes",
     {
-      id: {
-        type: DataTypes.VIRTUAL,
-        autoIncrement: true,
-        primaryKey: true,
-        get() {
-          return `${this.userId}-${this.resId}`;
-        },
-      },
+      // id: {
+      //   type: DataTypes.VIRTUAL,
+      //   autoIncrement: true,
+      //   primaryKey: true,
+      //   get() {
+      //     return `${this.userId}-${this.resId}`;
+      //   },
+      // },
       userId: {
         type: DataTypes.INTEGER,
         field: "user_id",
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       dateLike: {
         type: DataTypes.DATE,
         field: "date_like",
-        default: Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {

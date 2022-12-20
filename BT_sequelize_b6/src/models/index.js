@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const likeRes = require("./likeRes");
+const likeRes = require("./LikeRes");
 
 
 const sequelize = new Sequelize("app_food", "root", "1234", {
@@ -7,6 +7,11 @@ const sequelize = new Sequelize("app_food", "root", "1234", {
     host: "localhost",
     port: 3306,
 });
+// const sequelize = new Sequelize("test1", "root", "1234", {
+//     dialect: "mysql",
+//     host: "localhost",
+//     port: 3306,
+// });
 
 (async () => {
     try {
@@ -20,9 +25,10 @@ const sequelize = new Sequelize("app_food", "root", "1234", {
 //Khởi tạo models
 const User = require("./User")(sequelize);
 const Restaurant = require("./Restaurant")(sequelize);
-const LikeRes = require("./likeRes")(sequelize);
-const RateRes = require("./rateRes")(sequelize);
-const Order = require("./order")(sequelize);
+const LikeRes = require("./LikeRes")(sequelize);
+const RateRes = require("./RateRes")(sequelize);
+const Order = require("./Order")(sequelize);
+const Food = require("./Food")(sequelize);
 
 // Xử lí like nhà hàng
 User.belongsToMany(Restaurant,{
@@ -37,13 +43,7 @@ Restaurant.belongsToMany(User, {
     foreignKey: "resId"
 })
 
-// Xử lý đánh giá nhà hàng
-// RateRes.belongsTo(User, {foreignKey: "userId"});
-// User.hasMany(RateRes, {foreignKey:"userId"});
-
-// RateRes.belongsTo(Restaurant, {foreignKey: "resId"});
-// Restaurant.hasMany(RateRes, {foreignKey: "resId"});
-
+// Xử lí rate nhà hàng
 User.belongsToMany(Restaurant,{
     as: "userRatesRestaurant",
     through: RateRes,
@@ -57,6 +57,17 @@ Restaurant.belongsToMany(User, {
 })
 
 // User đặt món
+User.belongsToMany(Food,{
+    as: "userOrder",
+    through: Order,
+    foreignKey: "userId"
+});
+
+Food.belongsToMany(User, {
+    as: "FoodOrdered",
+    through: Order,
+    foreignKey: "foodId"
+})
 
 
 module.exports = {
@@ -66,4 +77,5 @@ module.exports = {
     LikeRes,
     RateRes,
     Order,
+    Food,
 };

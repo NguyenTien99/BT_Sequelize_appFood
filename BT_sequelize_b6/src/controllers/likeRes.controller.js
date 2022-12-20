@@ -1,12 +1,12 @@
 const likeResService = require('../services/likeRes.service');
 const { response } =require("../helpers/response");
 
-const addLikeRes = () => {
+const likedRes = () => {
     return async (req, res, next) => {
         try {
-            const {resId} = req.params;
-            const {userId} = req.body;
-            const createdLikeRes = await likeResService.addLikeRes(userId,resId);
+            const { resId } = req.params;
+            const { userId } = req.body;
+            const createdLikeRes = await likeResService.likedRes(userId,resId);
 
             // res.status(200).json({data: createdLikeRes});
             res.status(200).json(response(createdLikeRes));
@@ -50,7 +50,7 @@ const getLikeResByRes = () => {
 
 
 module.exports = {
-    addLikeRes,
+    likedRes,
     getLikeResByUser,
     getLikeResByRes,
 }

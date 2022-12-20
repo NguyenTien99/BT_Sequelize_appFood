@@ -1,18 +1,18 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 
 
 module.exports = (sequelize) => {
   return sequelize.define(
     "RateRes",
     {
-      id: {
-        type: DataTypes.VIRTUAL,
-        autoIncrement: true,
-        primaryKey: true,
-        get() {
-          return `${this.userId}-${this.resId}`;
-        },
-      },
+      // id: {
+      //   type: DataTypes.VIRTUAL,
+      //   autoIncrement: true,
+      //   primaryKey: true,
+      //   get() {
+      //     return `${this.userId}-${this.resId}`;
+      //   },
+      // },
       userId: {
         type: DataTypes.INTEGER,
         field: "user_id",
@@ -27,6 +27,7 @@ module.exports = (sequelize) => {
       dateRate: {
         type: DataTypes.DATE,
         field: "date_rate",
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {

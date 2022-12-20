@@ -1,14 +1,29 @@
-const { Order } = require("../models")
+const { AppError } = require("../helpers/error");
+const { User, Food } = require("../models");
 
-const createOrder = async (data) => {
+
+const order = async (foodId,data) => {
     try {
-        const createdOrder = await Order.create(data);
-        return createdOrder;
+        const user = await User.findByPk(data.userId);
+        if(!user){
+            throw new AppError(400, "User not found");
+        }
+
+        const food = await Food.findByPk(foodId);
+        if(!food){
+            throw new AppError(400, "Food not found");
+        }
+
+        // console.log(food.__proto__);
+        await food.addFoodOrdered(user.userId,{through: data});
+        
+        return null
     } catch (error) {
         throw error
     }
 };
 
+
 module.exports = {
-    createOrder,
+    order,
 }

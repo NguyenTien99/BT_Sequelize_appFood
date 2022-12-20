@@ -1,18 +1,37 @@
-const { RateRes, User, Restaurant } = require("../models");
+const { AppError } = require("../helpers/error");
+const { User, Restaurant, RateRes } = require("../models");
 
 
-
-const createRate = async(data) => {
+const createRate = async(resId, data) => {
     try {
-        const createdRate = await RateRes.create(data);
-        return createdRate;
+        const restaurant = await Restaurant.findByPk(resId);
+        if(!restaurant){
+            throw new AppError(400, "Restaurant not found");
+        }
+
+        const user = await User.findByPk(data.userId);
+        if(!user){
+            throw new AppError(400, "User not found");
+        }
+
+        await restaurant.addRestaurantRatedUser(user.userId,{through: {amount: data.amount}});
+        // await RateRes.create({...data, resId});
+
+        return null;
     } catch (error) {
         throw error;
     }
 }
 
+
 const getRateByUser = async (userId) => {
     try {
+        const user = await User.findOne({ where : { userId }});
+
+        if(!user){
+            throw new AppError(400, "User Not Found");
+        }
+
         const data = await User.findOne({
             where: {
                 userId
@@ -28,6 +47,13 @@ const getRateByUser = async (userId) => {
 
 const getRateByRes = async (resId) => {
     try {
+
+        const restaurant = await Restaurant.findOne({ where : { resId }});
+
+        if(!restaurant){
+            throw new AppError(400, "Restaurant not found");
+        }
+
         const data = await Restaurant.findOne({
             where: {
                 resId,

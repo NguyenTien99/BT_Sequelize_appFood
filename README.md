@@ -1,7 +1,7 @@
 # BT_Sequelize_appFood
 route:
   - Xử lí like nhà hàng
-    + POST localhost:4000/api/v1/likeRes/:resId/like      // Like/Unlike nhà hàng
+    + POST localhost:4000/api/v1/likeRes/:resId/like      // Like/Unlike nhà hàng             
        // Body: { 
         "userId" : "int" 
       }                 

@@ -3,7 +3,7 @@ route:
   - Xử lí like nhà hàng
     + POST localhost:4000/api/v1/likeRes/:resId/like      // Like/Unlike nhà hàng
       { 
-        "userId": "int"     
+        "userId": "int" 
       }
     + GET localhost:4000/api/v1/user/:userId              // Lấy danh sách like theo user
     + GET localhost:4000/api/v1/restauranr/:resId         // Lấy danh sách like theo nhà hàng

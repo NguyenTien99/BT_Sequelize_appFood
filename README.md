@@ -2,7 +2,7 @@
 route:
   - Xử lí like nhà hàng
     + POST localhost:4000/api/v1/likeRes/:resId/like      // Like/Unlike nhà hàng
-      { 
+       Body: { 
         "userId": "int" 
       }
     + GET localhost:4000/api/v1/user/:userId              // Lấy danh sách like theo user
@@ -10,7 +10,7 @@ route:
     
   - Xử lí đánh giá nhà hàng
     + POST localhost:4000/api/v1/rateRes/:resId/rate      // Thêm đánh giá
-        { 
+        Body: { 
         "userId" : "int",
         "amount" : "int",
         }
@@ -19,7 +19,7 @@ route:
   
   - Order:
     + POST localhost:4000/api/v1/orders/:foodId             // Thêm order
-      { 
+       Body: { 
         "userId" : "int",
         "amount" : "int",
         "code" : "string",

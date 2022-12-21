@@ -14,10 +14,12 @@ const order = async (foodId,data) => {
             throw new AppError(400, "Food not found");
         }
 
-        // console.log(food.__proto__);
-        await food.addFoodOrdered(user.userId,{through: data});
+        console.log(user.__proto__);
+        // await food.addFoodOrdered(user.userId,{through: data});
+        await user.addUserOrder(foodId,{through: data})
         
-        return null
+        
+        return null;
     } catch (error) {
         throw error
     }
